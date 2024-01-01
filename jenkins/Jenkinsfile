@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+
+    tools{
+        go '1.21'
+    }
+
+    stages {
+        stage('Kill Process'){
+            steps{
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'ec2-54-234-185-179', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'sudo systemctl stop myblog.service', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+            }
+        }
+        stage('Build') {
+            environment {
+                        // Set the target OS and architecture
+                        GOOS   = 'linux'
+                        GOARCH = 'amd64'
+            }
+            steps {
+                sh 'go build -o blogserver'
+            }
+        }
+        stage('Deploy') {
+            steps{
+                sshPublisher(
+                    publishers:[sshPublisherDesc(configName: 'ec2-54-234-185-179',
+                    transfers:
+                    [sshTransfer(cleanRemote: false,
+                    excludes: '',
+                    execCommand: 'sudo systemctl start myblog.service',
+                    execTimeout: 120000,
+                    flatten: false,
+                    makeEmptyDirs: false,
+                    noDefaultExcludes: false,
+                    patternSeparator: '[, ]+',
+                    remoteDirectory: 'jenkins_build',
+                    remoteDirectorySDF: false,
+                    removePrefix: '',
+                    sourceFiles: '**/blogserver,templates/**')],
+                    usePromotionTimestamp: false,
+                    useWorkspaceInPromotion: false,
+                    verbose: true)]
+                )
+            }
+        }
+    }
+}
