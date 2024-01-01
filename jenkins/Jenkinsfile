@@ -34,10 +34,10 @@ pipeline {
                     makeEmptyDirs: false,
                     noDefaultExcludes: false,
                     patternSeparator: '[, ]+',
-                    remoteDirectory: 'jenkins_build',
+                    remoteDirectory: 'myblog',
                     remoteDirectorySDF: false,
                     removePrefix: '',
-                    sourceFiles: '**/blogserver,templates/**')],
+                    sourceFiles: '**/blogserver')],
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
                     verbose: true)]
