@@ -19,5 +19,6 @@ func main() {
 		panic(fmt.Errorf("fatal error config file: %w", err))
 		return
 	}
+	fmt.Println("End the service")
 
 }
