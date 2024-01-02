@@ -2,27 +2,31 @@ package render
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"log"
-	"myblog"
+	"myblog/pkg/config"
 	"net/http"
 	"path/filepath"
 )
 
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	tc, err := createTemplateCache()
-	if err != nil {
-		log.Fatal(err)
-	}
+var app *config.AppConfig
 
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
+
+func RenderTemplate(w http.ResponseWriter, tmpl string) {
+	tc := app.TemplateCache
+	fmt.Println("test: ", tc)
 	t, ok := tc[tmpl]
 	if !ok {
-		log.Fatal(err)
+		log.Fatal("Could not get template from template cache")
 	}
 
 	buf := new(bytes.Buffer)
 
-	err = t.Execute(buf, nil)
+	err := t.Execute(buf, nil)
 
 	if err != nil {
 		log.Fatal(err)
@@ -34,10 +38,11 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 	}
 }
 
-func createTemplateCache() (map[string]*template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 	//get all page template
-	pages, err := filepath.Glob(go_backend.GlobalTemplatePath + "*.page.gohtml")
+	fmt.Println("test: ", config.TemplatePath)
+	pages, err := filepath.Glob(config.TemplatePath + "/*.page.gohtml")
 	if err != nil {
 		return myCache, err
 	}
@@ -51,13 +56,13 @@ func createTemplateCache() (map[string]*template.Template, error) {
 			return myCache, err
 		}
 		//add template set to cache
-		matches, err := filepath.Glob(go_backend.GlobalTemplatePath + "*.layout.gohtml")
+		matches, err := filepath.Glob(config.TemplatePath + "/*.layout.gohtml")
 		if err != nil {
 			return myCache, err
 		}
 
 		if len(matches) > 0 {
-			ts, err = ts.ParseGlob(go_backend.GlobalTemplatePath + "*.layout.gohtml")
+			ts, err = ts.ParseGlob(config.TemplatePath + "/*.layout.gohtml")
 			if err != nil {
 				return myCache, err
 			}
