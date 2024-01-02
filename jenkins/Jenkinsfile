@@ -18,10 +18,12 @@ pipeline {
                         GOARCH = 'amd64'
             }
             steps {
-                sh 'pwd'
-                sh 'cd cmd/web'
-                sh 'pwd'
-                sh 'go build -o blogserver .'
+                sh '''
+                    pwd
+                    cd cmd/web
+                    pwd
+                    go build -o blogserver
+                '''
             }
         }
         stage('Deploy') {
