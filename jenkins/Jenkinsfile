@@ -19,7 +19,7 @@ pipeline {
             }
             steps {
                 sh 'cd cmd/web'
-                sh 'go build -o blogserver'
+                sh 'go build -o blogserver .'
             }
         }
         stage('Deploy') {
