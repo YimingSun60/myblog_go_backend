@@ -42,7 +42,7 @@ pipeline {
                     remoteDirectory: 'myblog',
                     remoteDirectorySDF: false,
                     removePrefix: '',
-                    sourceFiles: '**/blogserver')],
+                    sourceFiles: 'cmd/web/blogserver')],
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
                     verbose: true)]
