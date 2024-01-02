@@ -7,14 +7,14 @@ import (
 	"net/http"
 )
 
-const portNumber = ":8080"
+const portNumber = ":8081"
 const assetsPath = "/assets/"
 
 func main() {
 	go_backend.Initialize()
 	fmt.Println("Start the service")
 	http.HandleFunc("/", handlers.Home)
-	http.HandleFunc("/about", handlers.About)
+	http.HandleFunc("/album", handlers.Album)
 	http.Handle(assetsPath, http.StripPrefix(assetsPath, http.FileServer(http.Dir(go_backend.GlobalTemplatePath+"/assets"))))
 	err := http.ListenAndServe(portNumber, nil)
 	if err != nil {
