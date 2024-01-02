@@ -42,7 +42,7 @@ pipeline {
                     remoteDirectory: 'myblog',
                     remoteDirectorySDF: false,
                     removePrefix: '',
-                    sourceFiles: 'blogserver')],
+                    sourceFiles: 'go_backend/blogserver')],
                     usePromotionTimestamp: false,
                     useWorkspaceInPromotion: false,
                     verbose: true)]
