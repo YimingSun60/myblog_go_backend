@@ -2,7 +2,6 @@ package render
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"log"
 	"myblog/pkg/config"
@@ -17,8 +16,13 @@ func NewTemplates(a *config.AppConfig) {
 }
 
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	tc := app.TemplateCache
-	fmt.Println("test: ", tc)
+	var tc map[string]*template.Template
+	if app.UseCache {
+		tc = app.TemplateCache
+	} else {
+		tc, _ = CreateTemplateCache()
+	}
+
 	t, ok := tc[tmpl]
 	if !ok {
 		log.Fatal("Could not get template from template cache")
@@ -41,7 +45,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string) {
 func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 	//get all page template
-	fmt.Println("test: ", config.TemplatePath)
+
 	pages, err := filepath.Glob(config.TemplatePath + "/*.page.gohtml")
 	if err != nil {
 		return myCache, err

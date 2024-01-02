@@ -10,6 +10,7 @@ var TemplatePath string
 
 type AppConfig struct {
 	TemplateCache map[string]*template.Template
+	UseCache      bool
 }
 
 func SetTemplatePath() {

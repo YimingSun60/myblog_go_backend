@@ -9,25 +9,30 @@ import (
 	"net/http"
 )
 
-const portNumber = ":8080"
+const portNumber = ":8081"
 const assetsPath = "/assets/"
 
 func main() {
 
 	config.SetTemplatePath()
 	var a config.AppConfig
+	var repo *handlers.Repository
+
 	tc, err := render.CreateTemplateCache()
-	fmt.Println(tc)
+
 	if err != nil {
 		log.Fatal("Error when create template cache: ", err)
 		return
 	}
 	a.TemplateCache = tc
+	a.UseCache = false
+	repo = handlers.NewRepo(&a)
+	handlers.NewHandlers(repo)
+
 	render.NewTemplates(&a)
 
-	fmt.Println("Start the service")
-	http.HandleFunc("/", handlers.Home)
-	http.HandleFunc("/album", handlers.Album)
+	http.HandleFunc("/", handlers.Repo.Home)
+	http.HandleFunc("/album", handlers.Repo.Album)
 	http.Handle(assetsPath, http.StripPrefix(assetsPath, http.FileServer(http.Dir(config.TemplatePath+"/assets"))))
 	err = http.ListenAndServe(portNumber, nil)
 	if err != nil {
