@@ -20,6 +20,7 @@ pipeline {
             steps {
                 sh 'pwd'
                 sh 'cd cmd/web'
+                sh 'pwd'
                 sh 'go build -o blogserver .'
             }
         }
