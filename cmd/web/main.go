@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-const portNumber = ":8080"
+const portNumber = ":8081"
 const assetsPath = "/assets/"
 
 func main() {
