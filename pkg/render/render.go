@@ -1,14 +1,15 @@
-package main
+package render
 
 import (
 	"fmt"
 	"html/template"
+	"myblog"
 	"net/http"
 )
 
-func renderTemplate(w http.ResponseWriter, tmpl string) {
+func RenderTemplate(w http.ResponseWriter, tmpl string) {
 
-	parsedTemplate, err1 := template.ParseFiles(globalTemplatePath + tmpl)
+	parsedTemplate, err1 := template.ParseFiles(go_backend.GlobalTemplatePath + tmpl)
 	if err1 != nil {
 		panic(fmt.Errorf("error parsing template: %w", err1))
 		return

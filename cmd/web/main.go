@@ -2,18 +2,20 @@ package main
 
 import (
 	"fmt"
+	"myblog"
+	"myblog/pkg/handlers"
 	"net/http"
 )
 
-const portNumber = ":8081"
+const portNumber = ":8080"
 const assetsPath = "/assets/"
 
 func main() {
-	initialize()
+	go_backend.Initialize()
 	fmt.Println("Start the service")
-	http.HandleFunc("/", Home)
-	http.HandleFunc("/about", About)
-	http.Handle(assetsPath, http.StripPrefix(assetsPath, http.FileServer(http.Dir(globalTemplatePath+"/assets"))))
+	http.HandleFunc("/", handlers.Home)
+	http.HandleFunc("/about", handlers.About)
+	http.Handle(assetsPath, http.StripPrefix(assetsPath, http.FileServer(http.Dir(go_backend.GlobalTemplatePath+"/assets"))))
 	err := http.ListenAndServe(portNumber, nil)
 	if err != nil {
 		panic(fmt.Errorf("fatal error config file: %w", err))

@@ -1,18 +1,18 @@
-package main
+package go_backend
 
 import (
 	"fmt"
 	"path/filepath"
 )
 
-var globalTemplatePath string
+var GlobalTemplatePath string
 
-func initialize() {
-	absPath, absPath_err := filepath.Abs("../myblog/templates")
+func Initialize() {
+	absPath, absPath_err := filepath.Abs("../templates")
 	if absPath_err != nil {
 		fmt.Println("Error when get abs path: ", absPath_err)
 		return
 	}
-	globalTemplatePath = absPath
-	fmt.Println(globalTemplatePath)
+	GlobalTemplatePath = absPath
+	fmt.Println(GlobalTemplatePath)
 }
