@@ -22,7 +22,7 @@ pipeline {
                     pwd
                     cd cmd/web
                     pwd
-                    go build -o ../../blogserver
+                    go build -o ../go_backend/blogserver
                 '''
             }
         }
