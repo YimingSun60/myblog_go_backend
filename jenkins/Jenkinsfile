@@ -18,6 +18,7 @@ pipeline {
                         GOARCH = 'amd64'
             }
             steps {
+                sh 'cd cmd/web'
                 sh 'go build -o blogserver'
             }
         }
