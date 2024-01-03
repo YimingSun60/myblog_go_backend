@@ -9,8 +9,9 @@ import (
 	"net/http"
 )
 
-const portNumber = ":8080"
+const portNumber = ":8081"
 const assetsPath = "/assets/"
+const cssPath = "/css/"
 
 func main() {
 
@@ -25,6 +26,7 @@ func main() {
 		return
 	}
 	a.TemplateCache = tc
+	//True for production, false for development
 	a.UseCache = false
 	repo = handlers.NewRepo(&a)
 	handlers.NewHandlers(repo)
@@ -34,6 +36,7 @@ func main() {
 	http.HandleFunc("/", handlers.Repo.Home)
 	http.HandleFunc("/album", handlers.Repo.Album)
 	http.Handle(assetsPath, http.StripPrefix(assetsPath, http.FileServer(http.Dir(config.TemplatePath+"/assets"))))
+	http.Handle(cssPath, http.StripPrefix(cssPath, http.FileServer(http.Dir(config.TemplatePath+"/css"))))
 	err = http.ListenAndServe(portNumber, nil)
 	if err != nil {
 		panic(fmt.Errorf("fatal error config file: %w", err))

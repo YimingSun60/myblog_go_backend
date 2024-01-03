@@ -31,5 +31,6 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Album(w http.ResponseWriter, r *http.Request) {
+	
 	render.RenderTemplate(w, "album.page.gohtml")
 }
