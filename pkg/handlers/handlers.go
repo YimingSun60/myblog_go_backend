@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"myblog/pkg/config"
+	"myblog/pkg/models"
 	"myblog/pkg/render"
 	"net/http"
 )
@@ -27,10 +28,11 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.gohtml")
+	render.RenderTemplate(w, "home.page.gohtml", &models.TemplateData{})
 }
 
 func (m *Repository) Album(w http.ResponseWriter, r *http.Request) {
-	
-	render.RenderTemplate(w, "album.page.gohtml")
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello, again."
+	render.RenderTemplate(w, "album.page.gohtml", &models.TemplateData{StringMap: stringMap})
 }
