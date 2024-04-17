@@ -11,6 +11,8 @@ import (
 
 const portNumber = ":8081"
 const assetsPath = "/assets/"
+const assetsPath_media = "/assets/media/"
+const assetsPath_img = "/assets/img/"
 const cssPath = "/css/"
 
 func main() {
@@ -36,7 +38,7 @@ func main() {
 	http.HandleFunc("/", handlers.Repo.Home)
 	http.HandleFunc("/album", handlers.Repo.Album)
 
-	http.Handle(assetsPath, http.StripPrefix(assetsPath, http.FileServer(http.Dir(config.TemplatePath+"/assets/"))))
+	http.Handle(assetsPath_media, http.StripPrefix(assetsPath_media, http.FileServer(http.Dir(config.TemplatePath+"/assets/media"))))
 
 	http.Handle(cssPath, http.StripPrefix(cssPath, http.FileServer(http.Dir(config.TemplatePath+"/css"))))
 	err = http.ListenAndServe(portNumber, nil)
