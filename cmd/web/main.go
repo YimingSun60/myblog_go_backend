@@ -13,7 +13,7 @@ const portNumber = ":8081"
 const assetsPath = "/assets/"
 const assetsPath_media = "/assets/media/"
 const assetsPath_img = "/assets/img/"
-const cssPath = "/css/"
+const cssPath = "/assets/css/"
 
 func main() {
 
@@ -39,9 +39,8 @@ func main() {
 	http.HandleFunc("/album", handlers.Repo.Album)
 
 	http.Handle(assetsPath_media, http.StripPrefix(assetsPath_media, http.FileServer(http.Dir(config.TemplatePath+"/assets/media"))))
-	println(config.TemplatePath + "/assets/media")
 	http.Handle(assetsPath_img, http.StripPrefix(assetsPath_img, http.FileServer(http.Dir(config.TemplatePath+"/assets/img"))))
-	http.Handle(cssPath, http.StripPrefix(cssPath, http.FileServer(http.Dir(config.TemplatePath+"/css"))))
+	http.Handle(cssPath, http.StripPrefix(cssPath, http.FileServer(http.Dir(config.TemplatePath+"/assets/css"))))
 	err = http.ListenAndServe(portNumber, nil)
 	if err != nil {
 		panic(fmt.Errorf("fatal error config file: %w", err))

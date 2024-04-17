@@ -14,7 +14,7 @@ type AppConfig struct {
 }
 
 func SetTemplatePath() {
-	absPath, absPath_err := filepath.Abs("../templates/views/")
+	absPath, absPath_err := filepath.Abs("../templates/")
 	if absPath_err != nil {
 		fmt.Println("Error when get abs path: ", absPath_err)
 		return
