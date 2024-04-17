@@ -67,13 +67,13 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 			return myCache, err
 		}
 		//add template set to cache
-		matches, err := filepath.Glob(config.TemplatePath + "/*.layout.gohtml")
+		matches, err := filepath.Glob(config.TemplatePath + "/views/*.layout.gohtml")
 		if err != nil {
 			return myCache, err
 		}
 
 		if len(matches) > 0 {
-			ts, err = ts.ParseGlob(config.TemplatePath + "/*.layout.gohtml")
+			ts, err = ts.ParseGlob(config.TemplatePath + "/views/*.layout.gohtml")
 			if err != nil {
 				return myCache, err
 			}
