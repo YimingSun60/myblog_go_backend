@@ -36,7 +36,8 @@ func main() {
 	http.HandleFunc("/", handlers.Repo.Home)
 	http.HandleFunc("/album", handlers.Repo.Album)
 
-	http.Handle(assetsPath, http.StripPrefix(assetsPath, http.FileServer(http.Dir(config.TemplatePath+"/assets"))))
+	http.Handle(assetsPath, http.StripPrefix(assetsPath, http.FileServer(http.Dir(config.TemplatePath+"/assets/"))))
+
 	http.Handle(cssPath, http.StripPrefix(cssPath, http.FileServer(http.Dir(config.TemplatePath+"/css"))))
 	err = http.ListenAndServe(portNumber, nil)
 	if err != nil {
